@@ -25,4 +25,11 @@ if uploaded:
         output = backend.narrate_in_slang(words, slang)
         st.subheader(f"Narration in {slang} Slang")
         st.write(output)
+       
+    # Speech
+    audio_data = backend.generate_tamil_speech(narration_text)
+
+    st.subheader("Tamil Narration (Audio)")
+    st.audio(audio_data, format='audio/mp3')
+
 
