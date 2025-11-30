@@ -1,6 +1,5 @@
 import streamlit as st
 import backend
-from backend import generate_tamil_speech
 
 
 st.title("Kadhai Visai - A Folk Voice Archive")
