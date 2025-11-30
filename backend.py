@@ -1,26 +1,24 @@
-# backend.py
-import whisper
+from faster_whisper import WhisperModel
 
-# Load model once (faster)
-model = whisper.load_model("small")
-
-
+# Load model once
+model = WhisperModel("small")
 
 def transcribe_tamil_audio(audio_file):
-    with open("temp_audio.wav", "wb") as f:
+    # Save uploaded audio to temp file
+    with open("temp.wav", "wb") as f:
         f.write(audio_file.read())
 
-    result = model.transcribe("temp_audio.wav", language="ta")
+    # Transcribe
+    segments, _ = model.transcribe("temp.wav", language="ta")
 
-    full_text = result["text"].strip()
+    full_text = " ".join([seg.text for seg in segments]).strip()
 
     words = full_text.split()
-
-    selected_words = words[ :6]
-
+    selected_words = words[:6]
     emotion = "Neutral"
 
     return selected_words, emotion, full_text
+
 
 def convert_word(word, slang):
     slang_dict = {
@@ -50,9 +48,10 @@ def convert_word(word, slang):
     if word in slang_dict[slang]:
         return slang_dict[slang][word]
 
-    return word 
+    return word
 
 
 def narrate_in_slang(words, slang):
     converted = [convert_word(w, slang) for w in words]
     return " ".join(converted)
+
