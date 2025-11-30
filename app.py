@@ -35,17 +35,17 @@ if "narration_output" in st.session_state:
     st.write(st.session_state["narration_output"])
 
 # Button to generate audio from the narration stored in session_state
+narration_text = st.text_area("Enter Tamil text:")
+
 if st.button("Generate Audio"):
-    narration_text = st.session_state.get("narration_output", "").strip()
-    if not narration_text:
-        st.error("Please generate narration first (click 'Generate Narration').")
-    else:
-        audio_data = backend.generate_tamil_speech(narration_text)
-        if audio_data:
-            st.subheader("Tamil Narration (Audio)")
-            st.audio(audio_data, format="audio/mp3")
-        else:
-            st.error("Failed to generate audio. Check OpenAI API key and logs.")
+    with st.spinner("Generating speech..."):
+        try:
+            audio_bytes = backend.generate_tamil_speech(narration_text)
+            st.audio(audio_bytes, format="audio/wav")
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+
 
 
 
