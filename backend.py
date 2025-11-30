@@ -1,17 +1,27 @@
 from faster_whisper import WhisperModel
-import openai
+from openai import OpenAI
+import io
 
-def generate_tamil_speech(text):
-    client = openai.OpenAI()
+# initialize client once
+client = OpenAI()
 
+def generate_tamil_speech(text: str):
+    """Use OpenAI TTS to create Tamil audio and return BytesIO (mp3)"""
+    if not text or not text.strip():
+        return None
+
+    # Call OpenAI TTS
     response = client.audio.speech.create(
-        model="gpt-4o-mini-tts",      # OpenAI TTS model
-        voice="alloy",                # neutral voice, works with Tamil
+        model="gpt-4o-mini-tts",
+        voice="alloy",
         input=text
     )
 
-    audio_data = response.read()
-    return audio_data
+    # response is binary audio — wrap in BytesIO to return
+    audio_bytes = io.BytesIO(response)
+    audio_bytes.seek(0)
+    return audio_bytes
+
 
 
 # Load model once
