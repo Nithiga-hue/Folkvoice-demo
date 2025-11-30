@@ -1,28 +1,23 @@
 from faster_whisper import WhisperModel
-from openai import OpenAI
 import io
+import time
+from openai import OpenAI, RateLimitError
 
-# initialize client once
 client = OpenAI()
 
-def generate_tamil_speech(text: str):
-    """Use OpenAI TTS to create Tamil audio and return BytesIO (mp3)"""
-    if not text or not text.strip():
-        return None
-
-    # Call OpenAI TTS
-    response = client.audio.speech.create(
-        model="gpt-4o-mini-tts",
-        voice="alloy",
-        input=text
-    )
-
-    # response is binary audio — wrap in BytesIO to return
-    audio_bytes = io.BytesIO(response)
-    audio_bytes.seek(0)
-    return audio_bytes
-
-
+def generate_tamil_speech(text):
+    for _ in range(3):  # retry 3 times
+        try:
+            response = client.audio.speech.create(
+                model="gpt-4o-mini-tts",
+                voice="alloy",
+                format="wav",
+                input=text
+            )
+            return response.read()
+        except RateLimitError:
+            time.sleep(2)
+    raise Exception("Too many requests. Try again later.")
 
 # Load model once
 model = WhisperModel("small")
