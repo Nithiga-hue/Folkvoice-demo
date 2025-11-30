@@ -3,7 +3,8 @@ os.environ["STREAMLIT_SUPPRESS_FOO_WARNING"] = "1"
 os.environ["STREAMLIT_DEBUG"] = "1"
 import streamlit as st
 import backend
-from backend import generate_tamil_speech
+from backend.backend import generate_tamil_speech
+
 
 st.title("Kadhai Visai - A Folk Voice Archive")
 
