@@ -1,5 +1,7 @@
 streamlit
 faster-whisper
 numpy
+openai>=1.0.0
+
 
 
