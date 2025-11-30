@@ -1,5 +1,6 @@
 import streamlit as st
 import backend
+from backend import generate_tamil_speech
 
 st.title("Kadhai Visai - A Folk Voice Archive")
 
@@ -31,5 +32,8 @@ if uploaded:
 
     st.subheader("Tamil Narration (Audio)")
     st.audio(audio_data, format='audio/mp3')
+    st.header("5. Narration → Tamil Speech")
+    
+
 
 
