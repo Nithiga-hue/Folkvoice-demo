@@ -37,9 +37,11 @@ if "narration_output" in st.session_state:
 # Button to generate audio from the narration stored in session_state
 narration_text = st.text_area("Enter Tamil text:")
 
+
 if st.button("Generate Audio"):
     with st.spinner("Generating speech..."):
         try:
+            narration_text = backend.narrate_in_slang(words, slang)
             audio_bytes = backend.generate_tamil_speech(narration_text)
             st.audio(audio_bytes, format="audio/wav")
         except Exception as e:
