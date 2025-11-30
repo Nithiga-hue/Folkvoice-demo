@@ -10,8 +10,8 @@ def generate_tamil_speech(text):
         input=text
     )
 
-    audio_bytes = response.read()
-    return audio_bytes
+    audio_data = response.read()
+    return audio_data
 
 
 # Load model once
