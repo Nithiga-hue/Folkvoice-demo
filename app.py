@@ -1,6 +1,3 @@
-import os
-os.environ["STREAMLIT_SUPPRESS_FOO_WARNING"] = "1"
-os.environ["STREAMLIT_DEBUG"] = "1"
 import streamlit as st
 import backend
 from backend.backend import generate_tamil_speech
@@ -43,14 +40,16 @@ narration_text = st.text_area("Enter Tamil text:")
 
 
 if st.button("Generate Audio"):
-    with st.spinner("Generating speech..."):
-        try:
-            narration_text = backend.narrate_in_slang(words, slang)
-            audio_bytes = backend.generate_tamil_speech(narration_text)
-            st.audio(audio_bytes, format="audio/wav")
-        except Exception as e:
-            st.error(f"Error: {e}")
-
+    narration_text = st.session_state.get("narration_output", "").strip()
+    if not narration_text:
+        st.error("Please generate narration first (click 'Generate Narration').")
+    else:
+        audio_data = backend.generate_tamil_speech(narration_text)
+        if audio_data:
+            st.subheader("Tamil Narration (Audio)")
+            st.audio(audio_data, format="audio/mp3")
+        else:
+            st.error("Failed to generate audio. Check OpenAI API key and logs.")
 
 
 
