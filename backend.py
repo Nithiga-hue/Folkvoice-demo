@@ -23,7 +23,7 @@ def transcribe_tamil_audio(audio_file):
     return selected_words, emotion, full_text
 
 def convert_word(word, slang):
-   slang_dict = {
+    slang_dict = {
         "Madurai": {
             "ஒரு": "ஒரு",
             "ஊருல": "ஊருல்லே",
