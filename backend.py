@@ -69,3 +69,20 @@ def narrate_in_slang(words, slang):
     converted = [convert_word(w, slang) for w in words]
     return " ".join(converted)
 
+from gtts import gTTS
+import io
+
+def generate_tamil_speech(text: str):
+    """Convert Tamil text to speech and return audio bytes."""
+    if not text or text.strip() == "":
+        return None
+    
+    # gTTS generates mp3 bytes
+    tts = gTTS(text=text, lang='ta')
+    audio_bytes = io.BytesIO()
+    tts.write_to_fp(audio_bytes)
+    audio_bytes.seek(0)
+    
+    return audio_bytes
+
+
