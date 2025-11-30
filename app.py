@@ -1,14 +1,14 @@
 import streamlit as st
-from backend import transcribe_tamil_audio, narrate_in_slang
+import backend
 
-st.title("Folk Voice Archive – Prototype")
+st.title("Kadhai Visai - A Folk Voice Archive")
 
 uploaded = st.file_uploader("Upload Tamil audio", type=["wav", "mp3", "m4a"])
 
 if uploaded:
     st.success("Audio uploaded successfully!")
 
-    words, emotion, full_text = transcribe_tamil_audio(uploaded)
+    words, emotion, full_text = backend.transcribe_tamil_audio(uploaded)
 
     st.subheader("Full Transcription")
     st.write(full_text)
