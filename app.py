@@ -22,7 +22,7 @@ if uploaded:
     slang = st.selectbox("Choose slang", ["Madurai", "Kongu", "Nellai"])
 
     if st.button("Generate Narration"):
-        output = narrate_in_slang(words, slang)
+        output = backend.narrate_in_slang(words, slang)
         st.subheader(f"Narration in {slang} Slang")
         st.write(output)
 
