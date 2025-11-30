@@ -11,7 +11,6 @@ def generate_tamil_speech(text):
             response = client.audio.speech.create(
                 model="gpt-4o-mini-tts",
                 voice="alloy",
-                format="wav",
                 input=text
             )
             return response.read()
